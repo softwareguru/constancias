@@ -35,7 +35,7 @@ def generate_pdf(template_path=None, name=None, result_path=""):
     full_path = "{}/{}".format(settings.RESULTS_DIR, relative_path)
     wmark = PageMerge().add(create_watermark(text=name))[0]
     PageMerge(trailer.pages[0]).add(wmark, prepend=False).render()
-    PdfWriter(result_path,trailer=trailer).write()
+    PdfWriter(full_path,trailer=trailer).write()
     success = True
     return success, relative_path
 
