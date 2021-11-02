@@ -18,7 +18,12 @@ class Command(BaseCommand):
         self.stdout.write(f'Batch size is {size}')
         pending_badges = Badge.objects.filter(status=STATUS.queued)[:size]
         for badge in pending_badges:
-            success, result = utils.generate_pdf(template_path=badge.template.template_file.name,name=badge.person.name,result_path=badge.template.subdirectory)
+            success, result = utils.generate_pdf(
+                template_path=badge.template.template_file.name,
+                name=badge.person.name,
+                coords_y=badge.template.coords_y,
+                result_path=badge.template.subdirectory
+                )
             self.stdout.write(result)
             if success:
                 badge.status=STATUS.created
