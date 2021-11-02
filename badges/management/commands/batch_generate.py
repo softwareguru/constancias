@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
+from urllib import parse
 
 from post_office import mail
 
@@ -32,7 +33,7 @@ class Command(BaseCommand):
                 badge.status=STATUS.created
                 badge.url = settings.BASE_URL+result
                 context = {
-                    "url" : badge.url,
+                    "url" : parse.quote(badge.url,safe='/:'),
                     "event" : badge.template.event,
                     "org_id" : badge.template.org_id,
                     "year" : badge.template.event_year,
