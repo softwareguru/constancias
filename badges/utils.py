@@ -46,10 +46,6 @@ def generate_pdf(template_path=None, name=None, coords_y=0, result_path="", r=0,
     success = True
     return success, relative_path
 
-def send_badge(recipient, sender="eventos@sg.com.mx", template="generic_mail", context={}):
-    if not recipient:
-        return False
-    mail.send([recipient],sender,template,context)
 
 
 
