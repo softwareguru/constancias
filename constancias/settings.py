@@ -134,3 +134,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 BASE_URL = os.getenv('BASE_URL')
+RESULTS_DIR = os.getenv('RESULTS_DIR')

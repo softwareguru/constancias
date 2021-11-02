@@ -3,6 +3,7 @@ from pdfrw import PageMerge, PdfReader, PdfWriter
 from urllib import parse
 
 from post_office import mail
+from django.conf import settings
 
 def create_watermark(coord_x=107, coord_y=140, text="Hello", font="helvetica", size=32):
     fpdf = FPDF(orientation="P", unit="mm", format="Letter")
@@ -30,7 +31,7 @@ def generate_pdf(template_path=None, name=None, result_path=""):
         return success, result
 
     escaped_name = parse.quote(name)
-    result_path = "results/{}/{}.pdf".format(result_path, escaped_name)
+    result_path = "{}/{}/{}.pdf".format(settings.RESULTS_DIR, result_path, escaped_name)
     wmark = PageMerge().add(create_watermark(text=name))[0]
     PageMerge(trailer.pages[0]).add(wmark, prepend=False).render()
     PdfWriter(result_path,trailer=trailer).write()
