@@ -22,7 +22,10 @@ class Command(BaseCommand):
                 template_path=badge.template.template_file.name,
                 name=badge.person.name,
                 coords_y=badge.template.coords_y,
-                result_path=badge.template.subdirectory
+                result_path=badge.template.subdirectory,
+                r = badge.template.color_r,
+                g = badge.template.color_g,
+                b = badge.template.color_b,
                 )
             self.stdout.write(result)
             if success:
