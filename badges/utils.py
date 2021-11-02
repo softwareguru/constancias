@@ -33,7 +33,7 @@ def generate_pdf(template_path=None, name=None, coords_y=0, result_path="", r=0,
         return success, result
 
 #    escaped_name = parse.quote(name)
-    escaped_name = name
+    escaped_name = name.replace(" ","")
     relative_path = "{}/{}.pdf".format(result_path, escaped_name)
     full_path = "{}/{}".format(settings.RESULTS_DIR, relative_path)
     wmark = PageMerge().add(create_watermark(
