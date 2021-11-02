@@ -5,6 +5,7 @@ from urllib import parse
 from post_office import mail
 from django.conf import settings
 
+
 def create_watermark(coords_x=107, coords_y=0, text="Hello", font="helvetica", size=32,r=0,g=0,b=0):
     fpdf = FPDF(orientation="P", unit="mm", format="Letter")
     fpdf.add_page()
@@ -47,5 +48,12 @@ def generate_pdf(template_path=None, name=None, coords_y=0, result_path="", r=0,
     return success, relative_path
 
 
-
-
+def correct_chars(text):
+    aux = text.encode()
+    aux = aux.replace(b'a\xcc\x81', b'\xc3\xa1') # á
+    aux = aux.replace(b'e\xcc\x81', b'\xc3\xa9') # é
+    aux = aux.replace(b'i\xcc\x81', b'\xc3\xad') # í
+    aux = aux.replace(b'o\xcc\x81', b'\xc3\xb3') # ó
+    aux = aux.replace(b'u\xcc\x81', b'\xc3\xba') # ú
+    aux = aux.replace(b'n\xcc\x83', b'\xc3\xb1') # ñ
+    return aux.decode()

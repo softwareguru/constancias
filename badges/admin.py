@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django import forms
 
 from .models import BadgeTemplate, Person, Badge, STATUS
+import utils
 
 import csv
 
@@ -48,7 +49,7 @@ class BadgeAdmin(admin.ModelAdmin):
 
             for row in reader:
                 email = row['email'].lower().strip()
-                name = row['name'].strip()
+                name = utils.correct_chars(row['name'].strip())
 
                 person, created = Person.objects.get_or_create(email=email)
                 person.name = name
