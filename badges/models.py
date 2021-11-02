@@ -4,7 +4,7 @@ from django.db.models.deletion import PROTECT
 from collections import namedtuple
 from django.utils.translation import pgettext_lazy, gettext_lazy as _
 from django.utils import timezone
-
+from django.conf import settings
 
 STATUS = namedtuple('STATUS', 'queued created sent failed')._make(range(4))
 
@@ -29,7 +29,7 @@ class BadgeTemplate(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         from pathlib import Path
-        Path("results/"+self.subdirectory).mkdir(parents=True, exist_ok=True)
+        Path(settings.RESULTS_DIR+"/"+self.subdirectory).mkdir(parents=True, exist_ok=True)
 
 
 class Person(models.Model):
