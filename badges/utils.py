@@ -31,12 +31,13 @@ def generate_pdf(template_path=None, name=None, result_path=""):
         return success, result
 
     escaped_name = parse.quote(name)
-    result_path = "{}/{}/{}.pdf".format(settings.RESULTS_DIR, result_path, escaped_name)
+    relative_path = "{}/{}.pdf".format(result_path, escaped_name)
+    full_path = "{}/{}".format(settings.RESULTS_DIR, relative_path)
     wmark = PageMerge().add(create_watermark(text=name))[0]
     PageMerge(trailer.pages[0]).add(wmark, prepend=False).render()
     PdfWriter(result_path,trailer=trailer).write()
     success = True
-    return success, result_path
+    return success, relative_path
 
 def send_badge(recipient, sender="eventos@sg.com.mx", template="generic_mail", context={}):
     if not recipient:

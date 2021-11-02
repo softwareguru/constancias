@@ -22,7 +22,7 @@ class Command(BaseCommand):
             self.stdout.write(result)
             if success:
                 badge.status=STATUS.created
-                badge.url = settings.BASE_URL+result.replace('results/','',1)
+                badge.url = settings.BASE_URL+result
                 context = {
                     "url" : badge.url,
                     "event" : badge.template.event,
