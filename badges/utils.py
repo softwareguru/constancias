@@ -30,7 +30,8 @@ def generate_pdf(template_path=None, name=None, result_path=""):
         result = "Error reading template: {}".format(e)
         return success, result
 
-    escaped_name = parse.quote(name)
+#    escaped_name = parse.quote(name)
+    escaped_name = name
     relative_path = "{}/{}.pdf".format(result_path, escaped_name)
     full_path = "{}/{}".format(settings.RESULTS_DIR, relative_path)
     wmark = PageMerge().add(create_watermark(text=name))[0]
