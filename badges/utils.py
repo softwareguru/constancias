@@ -51,7 +51,7 @@ def generate_pdf(template_path=None, name=None, coords_y=0, result_path="", r=0,
     return success, relative_path
 
 
-def correct_chars(text):
+def fix_name(text):
     """
     Cleans up and formats a string with the name of a person. 
     """
