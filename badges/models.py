@@ -54,3 +54,10 @@ class Badge(models.Model):
 
     def __str__(self):
         return f'{self.person.name} - {self.template.event} - {self.template.role}'
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['template', 'person'], name='unique_badge'),
+        ]
+
+
