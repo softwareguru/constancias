@@ -33,7 +33,10 @@ def generate_pdf(template_path=None, name=None, coords_y=0, result_path="", r=0,
         result = "Error reading template: {}".format(e)
         return success, result
 
-#    escaped_name = parse.quote(name)
+    
+    # Remove whitespace from person name to prevent headaches further down the road.
+    # Although we could escape the string (replacing whitespace with %20 or +), 
+    # some sites (ie LinkedIn) have issues with this. So, better to just remove it.
     escaped_name = name.replace(" ","")
     relative_path = "{}/{}.pdf".format(result_path, escaped_name)
     full_path = "{}/{}".format(settings.RESULTS_DIR, relative_path)
@@ -49,6 +52,10 @@ def generate_pdf(template_path=None, name=None, coords_y=0, result_path="", r=0,
 
 
 def correct_chars(text):
+    """
+    Cleans up and formats a string with the name of a person. 
+    """
+    # Encode to utf-8 to make it easier to find weird characters that Eventbrite puts instead of accented chars.
     aux = text.encode()
     aux = aux.replace(b'a\xcc\x81', b'\xc3\xa1') # á
     aux = aux.replace(b'e\xcc\x81', b'\xc3\xa9') # é
@@ -56,4 +63,9 @@ def correct_chars(text):
     aux = aux.replace(b'o\xcc\x81', b'\xc3\xb3') # ó
     aux = aux.replace(b'u\xcc\x81', b'\xc3\xba') # ú
     aux = aux.replace(b'n\xcc\x83', b'\xc3\xb1') # ñ
-    return aux.decode()
+    # Decode to have our normal string
+    aux = aux.decode()
+    aux = aux.strip().title()
+    # In spanish we have last names with prepositions that shouldn't be titled, like "de la Cruz"
+    aux = aux.replace(" De ", " de ").replace(" La ", " la ")
+    return aux
