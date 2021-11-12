@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from django.shortcuts import redirect, render
 from django import forms
+from django.db import IntegrityError
 
 from .models import BadgeTemplate, Person, Badge, STATUS
 from badges import utils
@@ -55,7 +56,11 @@ class BadgeAdmin(admin.ModelAdmin):
                 person.name = name
                 person.save()
 
-                Badge.objects.create(person=person, template=template,status=STATUS.queued)
+                try:
+                    Badge.objects.create(person=person, template=template,status=STATUS.queued)
+                except IntegrityError:
+                    logger.info(f'Badge already exists for {email} and template id: {template_id}')
+                    pass    
 
             self.message_user(request, "Your csv file has been imported")
             return redirect("..")
