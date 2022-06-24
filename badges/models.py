@@ -11,6 +11,11 @@ from post_office.models import EmailTemplate
 STATUS = namedtuple('STATUS', 'queued created sent failed')._make(range(4))
 
 class BadgeTemplate(models.Model):
+
+    class OrientationType(models.TextChoices):
+        PORTRAIT = 'P', 'Portrait'
+        LANDSCAPE = 'L', 'Landscape'
+
     event = models.CharField(max_length=250)
     role = models.CharField(max_length=250)
     subdirectory = models.CharField(max_length=50, default="")
@@ -19,6 +24,7 @@ class BadgeTemplate(models.Model):
     # LinkedIn organization ID, used for LinkedIn certificate. Default is Software Guru's id.
     org_id = models.IntegerField(default=794778)
     template_file = models.FileField(upload_to='pdf_templates')
+    orientation = models.CharField(max_length=1,choices=OrientationType.choices,default=OrientationType.PORTRAIT)
     coords_x = models.IntegerField(blank=True, null=True,default=107)
     coords_y = models.IntegerField(blank=True, null=True)
     color_r = models.IntegerField(default=0, null=False)

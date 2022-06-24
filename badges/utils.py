@@ -6,18 +6,18 @@ from post_office import mail
 from django.conf import settings
 
 
-def create_watermark(coords_x=0, coords_y=0, text="Hello", font="helvetica", size=32,r=0,g=0,b=0):
-    fpdf = FPDF(orientation="P", unit="mm", format="Letter")
+def create_watermark(coords_x=0, coords_y=0, text="Hello", font="helvetica", size=32,r=0,g=0,b=0,orientation="P"):
+    fpdf = FPDF(orientation=orientation, unit="mm", format="Letter")
     fpdf.add_page()
     fpdf.add_font(family="Great Vibes",fname="fonts/GreatVibes-Regular.ttf", uni=True)	
     fpdf.set_font(family="Great Vibes", size=size)
     fpdf.set_text_color(r,g,b)
     fpdf.set_xy(coords_x, coords_y)
-    fpdf.cell(txt=text,align="C", center=True)
+    fpdf.cell(txt=text,align="X")
     reader = PdfReader(fdata=bytes(fpdf.output()))
     return reader.pages[0]
 
-def generate_pdf(template_path=None, name=None, coords_x=0, coords_y=0, result_path="", r=0,g=0,b=0):
+def generate_pdf(template_path=None, name=None, orientation="P", coords_x=0, coords_y=0, result_path="", r=0,g=0,b=0):
     success = False
     result = ""
     if not template_path:
@@ -42,6 +42,7 @@ def generate_pdf(template_path=None, name=None, coords_x=0, coords_y=0, result_p
     full_path = "{}/{}".format(settings.RESULTS_DIR, relative_path)
     wmark = PageMerge().add(create_watermark(
         text=name,
+        orientation=orientation,
         coords_x=coords_x,
         coords_y=coords_y,
         r=r,g=g,b=b
