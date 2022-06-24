@@ -6,12 +6,16 @@ from django.utils.translation import pgettext_lazy, gettext_lazy as _
 from django.utils import timezone
 from django.conf import settings
 
+from post_office.models import EmailTemplate
+
 STATUS = namedtuple('STATUS', 'queued created sent failed')._make(range(4))
 
 class BadgeTemplate(models.Model):
     event = models.CharField(max_length=250)
     role = models.CharField(max_length=250)
     subdirectory = models.CharField(max_length=50, default="")
+    email_template = models.ForeignKey(
+        EmailTemplate, default=1,on_delete=models.SET_NULL,null=True)
     # LinkedIn organization ID, used for LinkedIn certificate. Default is Software Guru's id.
     org_id = models.IntegerField(default=794778)
     template_file = models.FileField(upload_to='pdf_templates')
@@ -49,7 +53,7 @@ class Badge(models.Model):
 
     template = models.ForeignKey(
         BadgeTemplate, on_delete=PROTECT, related_name='template')
-    person = models.ForeignKey(Person, on_delete=PROTECT, related_name='person')   
+    person = models.ForeignKey(Person, on_delete=PROTECT, related_name='person')
     status = models.PositiveSmallIntegerField(_("Status"),
         choices=STATUS_CHOICES, db_index=True, default=STATUS.queued)
     created = models.DateTimeField(auto_now_add=True, db_index=True)

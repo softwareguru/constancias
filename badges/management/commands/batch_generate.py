@@ -41,7 +41,7 @@ class Command(BaseCommand):
                 }
                 try:
                     self.stdout.write(f'Enviando mail a {badge.person.email}')
-                    mail.send([badge.person.email],settings.DEFAULT_FROM_EMAIL,"generic_mail",context, priority='now')
+                    mail.send([badge.person.email],settings.DEFAULT_FROM_EMAIL,badge.template.email_template.name,context, priority='now')
                     badge.status=STATUS.sent
                 except Exception as e:
                     self.stdout.write(f'Error sending email: {e}')
