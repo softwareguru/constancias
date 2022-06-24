@@ -39,6 +39,10 @@ class Person(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
+
 class Badge(models.Model):
     STATUS_CHOICES = [(STATUS.queued, _("queued")), (STATUS.created, _("created")), 
                       (STATUS.sent, _("sent")), (STATUS.failed, _("failed")), ]

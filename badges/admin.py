@@ -14,7 +14,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 admin.site.register(BadgeTemplate)
-admin.site.register(Person)
+
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name','email')
+    search_fields = ('name','email')
 
 class CsvImportForm(forms.Form):
     template_id = forms.IntegerField()
