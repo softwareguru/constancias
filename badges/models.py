@@ -19,7 +19,7 @@ class BadgeTemplate(models.Model):
     # LinkedIn organization ID, used for LinkedIn certificate. Default is Software Guru's id.
     org_id = models.IntegerField(default=794778)
     template_file = models.FileField(upload_to='pdf_templates')
-    coords_x = models.IntegerField(blank=True, null=True)
+    coords_x = models.IntegerField(blank=True, null=True,default=107)
     coords_y = models.IntegerField(blank=True, null=True)
     color_r = models.IntegerField(default=0, null=False)
     color_g = models.IntegerField(default=0, null=False)

@@ -22,6 +22,7 @@ class Command(BaseCommand):
             success, result = utils.generate_pdf(
                 template_path=badge.template.template_file.name,
                 name=badge.person.name,
+                coords_x=badge.template.coords_x,
                 coords_y=badge.template.coords_y,
                 result_path=badge.template.subdirectory,
                 r = badge.template.color_r,
