@@ -28,6 +28,11 @@ class CsvImportForm(forms.Form):
 class BadgeAdmin(admin.ModelAdmin):
     list_display = ['person', 'template','status']
 
+    search_fields = [ 'person__name', 'person__email']
+
+    list_filter = [ 'template' ]
+
+
     change_list_template = "badges/change_list.html"
 
     def get_urls(self):
