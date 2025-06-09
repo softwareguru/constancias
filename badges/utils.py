@@ -6,11 +6,14 @@ from post_office import mail
 from django.conf import settings
 
 
-def create_watermark(coords_x=0, coords_y=0, text="Hello", font="helvetica", size=32,r=0,g=0,b=0,orientation="P"):
+def create_watermark(coords_x=0, coords_y=0, text="Hello", font="helvetica", size=34,r=0,g=0,b=0,orientation="P"):
     fpdf = FPDF(orientation=orientation, unit="mm", format="Letter")
     fpdf.add_page()
-    fpdf.add_font(family="Great Vibes",fname="fonts/GreatVibes-Regular.ttf", uni=True)	
-    fpdf.set_font(family="Great Vibes", size=size)
+    fpdf.add_font(family="Great Vibes",fname="fonts/GreatVibes-Regular.ttf", uni=True)
+    fpdf.add_font(family="Montserrat",fname="fonts/Montserrat-SemiBold.ttf", uni=True)
+#    fpdf.set_font(family="Great Vibes", size=size)
+#    fpdf.set_font(family="helvetica", size=size)
+    fpdf.set_font(family="Montserrat", size=size)
     fpdf.set_text_color(r,g,b)
     fpdf.set_xy(coords_x, coords_y)
     fpdf.cell(txt=text,align="X")

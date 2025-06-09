@@ -14,11 +14,10 @@ class Command(BaseCommand):
         parser.add_argument('--size', type=int, default=50, help='Number of badges to generate')
 
     def handle(self, *args, **options):
-        self.stdout.write('Generating badges...')
         size = options['size']
-        self.stdout.write(f'Batch size is {size}')
         pending_badges = Badge.objects.filter(status=STATUS.queued)[:size]
         for badge in pending_badges:
+            self.stdout.write(f"Generating for {badge.person.name}, {badge.person.email}")
             success, result = utils.generate_pdf(
                 template_path=badge.template.template_file.name,
                 name=badge.person.name,
