@@ -4,6 +4,7 @@
     <form action="." method="POST" enctype="multipart/form-data">
     {{ form.as_p }}
     {% csrf_token %}
+    <p>The CSV should have two columns: email, name (with that title on first row).</p>
     <button type="submit">Upload CSV</button>
     </form>
 </div>
